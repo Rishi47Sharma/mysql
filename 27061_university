@@ -1,0 +1,320 @@
+-- MySQL dump 10.13  Distrib 5.7.33, for Linux (x86_64)
+--
+-- Host: localhost    Database: university
+-- ------------------------------------------------------
+-- Server version	5.7.33-0ubuntu0.16.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `advisor`
+--
+
+DROP TABLE IF EXISTS `advisor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `advisor` (
+  `id` int(11) DEFAULT NULL,
+  `sid` varchar(5) DEFAULT NULL,
+  KEY `id` (`id`),
+  KEY `sid` (`sid`),
+  CONSTRAINT `advisor_ibfk_1` FOREIGN KEY (`id`) REFERENCES `instructor` (`id`),
+  CONSTRAINT `advisor_ibfk_2` FOREIGN KEY (`sid`) REFERENCES `student` (`sid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `advisor`
+--
+
+LOCK TABLES `advisor` WRITE;
+/*!40000 ALTER TABLE `advisor` DISABLE KEYS */;
+INSERT INTO `advisor` VALUES (111,'s2'),(112,'s1'),(112,'s5'),(113,'s4'),(114,'s3');
+/*!40000 ALTER TABLE `advisor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `classroom`
+--
+
+DROP TABLE IF EXISTS `classroom`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `classroom` (
+  `building` int(11) NOT NULL,
+  `roomno` int(11) NOT NULL,
+  `capacity` int(11) DEFAULT NULL,
+  PRIMARY KEY (`building`,`roomno`),
+  UNIQUE KEY `building` (`building`,`roomno`),
+  UNIQUE KEY `roomno` (`roomno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `classroom`
+--
+
+LOCK TABLES `classroom` WRITE;
+/*!40000 ALTER TABLE `classroom` DISABLE KEYS */;
+INSERT INTO `classroom` VALUES (1,11,120),(2,21,120),(3,32,60),(4,42,180),(5,52,60);
+/*!40000 ALTER TABLE `classroom` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `course`
+--
+
+DROP TABLE IF EXISTS `course`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `course` (
+  `course_id` varchar(5) NOT NULL,
+  `title` char(20) DEFAULT NULL,
+  `deptname` varchar(10) DEFAULT NULL,
+  `credits` int(11) DEFAULT NULL,
+  PRIMARY KEY (`course_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `course`
+--
+
+LOCK TABLES `course` WRITE;
+/*!40000 ALTER TABLE `course` DISABLE KEYS */;
+INSERT INTO `course` VALUES ('bio 1','into to bio','biology',4),('bio 2','genetic','biology',3),('cs 1','intro to cs','computer',3),('cs 2','robotics','computer',4),('his 1','world history','history',4),('mu 1','music audio','music',3),('mu 2','music video pro','music',4),('phy 2','physic principles','physic',4);
+/*!40000 ALTER TABLE `course` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `department`
+--
+
+DROP TABLE IF EXISTS `department`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `department` (
+  `dept_name` varchar(10) NOT NULL,
+  `building` int(11) NOT NULL,
+  `budget` int(11) DEFAULT NULL,
+  PRIMARY KEY (`dept_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `department`
+--
+
+LOCK TABLES `department` WRITE;
+/*!40000 ALTER TABLE `department` DISABLE KEYS */;
+INSERT INTO `department` VALUES ('biology',5,700000),('computer',1,500000),('history',4,300000),('music',2,100000),('physics',3,400000);
+/*!40000 ALTER TABLE `department` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `instructor`
+--
+
+DROP TABLE IF EXISTS `instructor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `instructor` (
+  `id` int(11) NOT NULL,
+  `name` char(10) DEFAULT NULL,
+  `salary` int(11) DEFAULT NULL,
+  `dept_name` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dept_name` (`dept_name`),
+  CONSTRAINT `instructor_ibfk_1` FOREIGN KEY (`dept_name`) REFERENCES `department` (`dept_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `instructor`
+--
+
+LOCK TABLES `instructor` WRITE;
+/*!40000 ALTER TABLE `instructor` DISABLE KEYS */;
+INSERT INTO `instructor` VALUES (111,'abc',65000,'computer'),(112,'pqr',90000,'music'),(113,'efg',70000,'physics'),(114,'xyz',50000,'history'),(115,'lmn',90000,'music'),(116,'uvw',70000,'physics'),(117,'stu',50000,'biology');
+/*!40000 ALTER TABLE `instructor` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `section`
+--
+
+DROP TABLE IF EXISTS `section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `section` (
+  `course_id` varchar(10) NOT NULL,
+  `tid` varchar(3) DEFAULT NULL,
+  `cbuilding` int(11) DEFAULT NULL,
+  `roomno` int(11) DEFAULT NULL,
+  `sec_id` varchar(3) NOT NULL,
+  `semster` char(2) NOT NULL,
+  `year` char(2) NOT NULL,
+  PRIMARY KEY (`course_id`,`sec_id`,`semster`,`year`),
+  UNIQUE KEY `course_id` (`course_id`,`sec_id`,`semster`,`year`),
+  UNIQUE KEY `sec_id` (`sec_id`),
+  UNIQUE KEY `semster` (`semster`),
+  UNIQUE KEY `semster_2` (`semster`),
+  UNIQUE KEY `year` (`year`),
+  KEY `cbuilding` (`cbuilding`),
+  KEY `roomno` (`roomno`),
+  CONSTRAINT `section_ibfk_1` FOREIGN KEY (`cbuilding`) REFERENCES `classroom` (`building`),
+  CONSTRAINT `section_ibfk_2` FOREIGN KEY (`roomno`) REFERENCES `classroom` (`roomno`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `section`
+--
+
+LOCK TABLES `section` WRITE;
+/*!40000 ALTER TABLE `section` DISABLE KEYS */;
+/*!40000 ALTER TABLE `section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `student`
+--
+
+DROP TABLE IF EXISTS `student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student` (
+  `sid` varchar(5) NOT NULL,
+  `sname` char(15) DEFAULT NULL,
+  `tot_credits` int(11) DEFAULT NULL,
+  `dept_name` varchar(10) DEFAULT NULL,
+  PRIMARY KEY (`sid`),
+  KEY `dept_name` (`dept_name`),
+  CONSTRAINT `student_ibfk_1` FOREIGN KEY (`dept_name`) REFERENCES `department` (`dept_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student`
+--
+
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES ('s1','ashish',8,'music'),('s2','rakesh',9,'computer'),('s3','chetan',9,'music'),('s4','mayuri',9,'physics'),('s5','priya',7,'biology'),('s6','tanvi',6,'computer'),('s7','anuskha',9,'history');
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `takes`
+--
+
+DROP TABLE IF EXISTS `takes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `takes` (
+  `sid` varchar(2) NOT NULL,
+  `course_id` varchar(5) DEFAULT NULL,
+  `sec_id` varchar(3) DEFAULT NULL,
+  `semester` char(2) DEFAULT NULL,
+  `year` char(2) DEFAULT NULL,
+  `grade` char(2) DEFAULT NULL,
+  PRIMARY KEY (`sid`),
+  KEY `course_id` (`course_id`),
+  KEY `sec_id` (`sec_id`),
+  KEY `semester` (`semester`),
+  KEY `year` (`year`),
+  CONSTRAINT `takes_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `section` (`course_id`),
+  CONSTRAINT `takes_ibfk_2` FOREIGN KEY (`sec_id`) REFERENCES `section` (`sec_id`),
+  CONSTRAINT `takes_ibfk_3` FOREIGN KEY (`semester`) REFERENCES `section` (`semster`),
+  CONSTRAINT `takes_ibfk_4` FOREIGN KEY (`year`) REFERENCES `section` (`year`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `takes`
+--
+
+LOCK TABLES `takes` WRITE;
+/*!40000 ALTER TABLE `takes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `takes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `teaches`
+--
+
+DROP TABLE IF EXISTS `teaches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `teaches` (
+  `id` int(11) NOT NULL,
+  `course_id` varchar(100) DEFAULT NULL,
+  `sec_id` varchar(5) DEFAULT NULL,
+  `semester` char(2) DEFAULT NULL,
+  `year` char(2) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `course_id` (`course_id`),
+  KEY `sec_id` (`sec_id`),
+  KEY `semester` (`semester`),
+  KEY `year` (`year`),
+  CONSTRAINT `teaches_ibfk_1` FOREIGN KEY (`course_id`) REFERENCES `section` (`course_id`),
+  CONSTRAINT `teaches_ibfk_2` FOREIGN KEY (`sec_id`) REFERENCES `section` (`sec_id`),
+  CONSTRAINT `teaches_ibfk_3` FOREIGN KEY (`semester`) REFERENCES `section` (`semster`),
+  CONSTRAINT `teaches_ibfk_4` FOREIGN KEY (`year`) REFERENCES `section` (`year`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `teaches`
+--
+
+LOCK TABLES `teaches` WRITE;
+/*!40000 ALTER TABLE `teaches` DISABLE KEYS */;
+/*!40000 ALTER TABLE `teaches` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `time_slot`
+--
+
+DROP TABLE IF EXISTS `time_slot`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `time_slot` (
+  `tid` varchar(2) NOT NULL,
+  `startime` time DEFAULT NULL,
+  `endtime` time DEFAULT NULL,
+  `day` char(10) DEFAULT NULL,
+  PRIMARY KEY (`tid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `time_slot`
+--
+
+LOCK TABLES `time_slot` WRITE;
+/*!40000 ALTER TABLE `time_slot` DISABLE KEYS */;
+INSERT INTO `time_slot` VALUES ('t1','09:00:00','14:00:00','monday'),('t2','10:00:00','15:00:00','monday'),('t3','09:00:00','14:00:00','tuesday'),('t4','08:00:00','10:00:00','thrusday'),('t5','07:00:00','09:00:00','friday');
+/*!40000 ALTER TABLE `time_slot` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2022-03-31 11:32:30
